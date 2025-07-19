@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <center>
+    <div class="game-container">
+        <h1>Rock Paper Scissors</h1>
+
+        <div class="score-section">
+            <div class="player-score-box">
+                <p>You</p>
+                <span id="player-score">0</span>
+            </div>
+
+            <div class="vs-text">vs</div>
+            <div class="computer-score-box">
+                <p>Computer</p>
+                <span id="computer-score">0</span>
+            </div>
+            </div>
+
+            <div class="round-info">
+                <p>Round
+                <span id="round-count">1</span>/5</p>
+            </div>
+
+
+        <div class="choices">
+            <button class="choice" data-choice="rock">🪨Rock</button>
+            <button class="choice" data-choice="paper">📄Paper</button>
+            <button class="choice" data-choice="Scissors">✂️Scissors</button>
+        </div>
+        <div class="selections">
+            <div>
+                <p>Your Choice</p>
+                <div id="your-choice">?</div>
+                
+            </div>
+            
+            <div>
+                <p>Computer'sChoice</p>
+                <div id="computer-choice">?</div>
+            </div>
+        </div>
+
+        <div class="result" id="result">Make Your Choice!</div>
+        <p></p>
+        <button id="play-again">Reset Game</button>
+        </center>
+    </div>
+    
+    <script src="script.js"></script>
+    </body>
+    </html>
