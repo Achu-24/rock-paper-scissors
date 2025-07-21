@@ -1,106 +1,88 @@
-const choices = document.querySelectorAll(".choice");
-const playerScoreEl = document.getElementById("player-score");
-const computerScoreEl = document.getElementById("computer-score");
-const resultEl = document.getElementById("result");
-const yourChoiceEl = document.getElementById("your-choice");
-const computerChoiceEl = document.getElementById("computer-choice");
-const roundCountEl = document.getElementById("round-count");
-const playAgainBtn = document.getElementById("play-again");
-
 let playerScore = 0;
 let computerScore = 0;
 let round = 1;
-const maxRounds = 5;
+const totalRounds = 5;
 
-const choiceEmojis = {
-    rock: "🪨",
-    paper: "📄",
-    scissors: "✂️"
-};
+const playerScoreEl = document.getElementById("player-score");
+const computerScoreEl = document.getElementById("computer-score");
+const playerChoiceEl = document.getElementById("player-choice");
+const computerChoiceEl = document.getElementById("computer-choice");
+const messageEl = document.getElementById("message");
+const roundDisplay = document.getElementById("round-display");
 
-choices.forEach(button => {
-    button.addEventListener("click", () => {
-        if (round > maxRounds) return;
-
-        const playerChoice = button.getAttribute("data-choice").toLowerCase();
-        const computerChoice = getComputerChoice();
-
-        yourChoiceEl.textContent = choiceEmojis[playerChoice] || "?";
-        computerChoiceEl.textContent = choiceEmojis[computerChoice] || "?";
-
-        const winner = getWinner(playerChoice, computerChoice);
-        updateScores(winner);
-        round++;
-        roundCountEl.textContent = round <= maxRounds ? round : maxRounds;
-
-        if (round > maxRounds) {
-            showFinalResult();
-        }
-    });
-});
-
-playAgainBtn.addEventListener("click", resetGame);
+const winSound = document.getElementById("win-sound");
+const loseSound = document.getElementById("lose-sound");
+const drawSound = document.getElementById("draw-sound");
 
 function getComputerChoice() {
-    const options = ["rock", "paper", "scissors"];
-    const randomIndex = Math.floor(Math.random() * options.length);
-    return options[randomIndex];
+  const choices = ["rock", "paper", "scissors"];
+  return choices[Math.floor(Math.random() * 3)];
 }
 
-function getWinner(player, computer) {
-    if (player === computer) return "draw";
-    if (
-        (player === "rock" && computer === "scissors") ||
-        (player === "paper" && computer === "rock") ||
-        (player === "scissors" && computer === "paper")
-    ) {
-        return "player";
-    }
-    return "computer";
+function playSound(result) {
+  if (result === "win") winSound.play();
+  else if (result === "lose") loseSound.play();
+  else drawSound.play();
 }
 
-function updateScores(winner) {
-    if (winner === "player") {
-        playerScore++;
-        resultEl.textContent = "You Win this Round!";
-        resultEl.style.color = "#7CFC00"; // light green
-    } else if (winner === "computer") {
-        computerScore++;
-        resultEl.textContent = "Computer Wins this Round!";
-        resultEl.style.color = "#FF6347"; // tomato red
-    } else {
-        resultEl.textContent = "It's a Draw!";
-        resultEl.style.color = "#FFD700"; // gold
-    }
+function makeChoice(playerChoice) {
+  if (round > totalRounds) return;
 
-    playerScoreEl.textContent = playerScore;
-    computerScoreEl.textContent = computerScore;
-}
+  const computerChoice = getComputerChoice();
 
-function showFinalResult() {
+  playerChoiceEl.textContent = playerChoice;
+  computerChoiceEl.textContent = computerChoice;
+
+  let result = "";
+
+  if (playerChoice === computerChoice) {
+    result = "draw";
+    messageEl.textContent = "It's a draw!";
+  } else if (
+    (playerChoice === "rock" && computerChoice === "scissors") ||
+    (playerChoice === "paper" && computerChoice === "rock") ||
+    (playerChoice === "scissors" && computerChoice === "paper")
+  ) {
+    result = "win";
+    playerScore++;
+    messageEl.textContent = "You won this round!";
+  } else {
+    result = "lose";
+    computerScore++;
+    messageEl.textContent = "Computer won this round!";
+  }
+
+  playSound(result);
+
+  playerScoreEl.textContent = playerScore;
+  computerScoreEl.textContent = computerScore;
+
+  round++;
+  if (round <= totalRounds) {
+    roundDisplay.textContent = `Round ${round}/5`;
+  } else {
+    roundDisplay.textContent = `Game Over`;
     if (playerScore > computerScore) {
-        resultEl.textContent = "🎉 You Won the Game!";
-        resultEl.style.color = "#00FF7F";
-    } else if (computerScore > playerScore) {
-        resultEl.textContent = "💻 Computer Won the Game!";
-        resultEl.style.color = "#FF4500";
+      messageEl.textContent = "🎉 You won the game!";
+      playSound("win");
+    } else if (playerScore < computerScore) {
+      messageEl.textContent = "💻 Computer won the game!";
+      playSound("lose");
     } else {
-        resultEl.textContent = "🤝 It's a Tie Game!";
-        resultEl.style.color = "#1E90FF";
+      messageEl.textContent = "It's a tie!";
+      playSound("draw");
     }
+  }
 }
 
 function resetGame() {
-    playerScore = 0;
-    computerScore = 0;
-    round = 1;
-
-    playerScoreEl.textContent = "0";
-    computerScoreEl.textContent = "0";
-    roundCountEl.textContent = "1";
-
-    yourChoiceEl.textContent = "?";
-    computerChoiceEl.textContent = "?";
-    resultEl.textContent = "Make Your Choice!";
-    resultEl.style.color = "#FFFFFF";
+  playerScore = 0;
+  computerScore = 0;
+  round = 1;
+  playerScoreEl.textContent = "0";
+  computerScoreEl.textContent = "0";
+  playerChoiceEl.textContent = "?";
+  computerChoiceEl.textContent = "?";
+  messageEl.textContent = "Make your choice!";
+  roundDisplay.textContent = "Round 1/5";
 }

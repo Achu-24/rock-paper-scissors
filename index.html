@@ -1,57 +1,55 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
-    <title>Rock Paper Scissors</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rock Paper Scissors</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <center>
-    <div class="game-container">
-        <h1>Rock Paper Scissors</h1>
+  <div class="container">
+    <h1>Rock Paper Scissors</h1>
 
-        <div class="score-section">
-            <div class="player-score-box">
-                <p>You</p>
-                <span id="player-score">0</span>
-            </div>
-
-            <div class="vs-text">vs</div>
-            <div class="computer-score-box">
-                <p>Computer</p>
-                <span id="computer-score">0</span>
-            </div>
-            </div>
-
-            <div class="round-info">
-                <p>Round
-                <span id="round-count">1</span>/5</p>
-            </div>
-
-
-        <div class="choices">
-            <button class="choice" data-choice="rock">🪨Rock</button>
-            <button class="choice" data-choice="paper">📄Paper</button>
-            <button class="choice" data-choice="Scissors">✂️Scissors</button>
-        </div>
-        <div class="selections">
-            <div>
-                <p>Your Choice</p>
-                <div id="your-choice">?</div>
-                
-            </div>
-            
-            <div>
-                <p>Computer'sChoice</p>
-                <div id="computer-choice">?</div>
-            </div>
-        </div>
-
-        <div class="result" id="result">Make Your Choice!</div>
-        <p></p>
-        <button id="play-again">Reset Game</button>
-        </center>
+    <div class="score-board">
+      <div class="score-box">
+        <p>You</p>
+        <div id="player-score">0</div>
+      </div>
+      <div class="vs">vs</div>
+      <div class="score-box">
+        <p>Computer</p>
+        <div id="computer-score">0</div>
+      </div>
     </div>
-    
-    <script src="script.js"></script>
-    </body>
-    </html>
+
+    <div id="round-display">Round 1/5</div>
+
+    <div class="choices">
+      <button onclick="makeChoice('rock')">🪨 Rock</button>
+      <button onclick="makeChoice('paper')">📄 Paper</button>
+      <button onclick="makeChoice('scissors')">✂️ Scissors</button>
+    </div>
+
+    <div class="results">
+      <div>
+        <p>Your choice</p>
+        <div id="player-choice">?</div>
+      </div>
+      <div>
+        <p>Computer's choice</p>
+        <div id="computer-choice">?</div>
+      </div>
+    </div>
+
+    <div id="message">Make your choice!</div>
+    <button id="reset-btn" onclick="resetGame()">🔄 Reset Game</button>
+
+    <!-- Sound elements -->
+    <audio id="win-sound" src="sounds/win.mp3" preload="auto"></audio>
+    <audio id="lose-sound" src="sounds/lose.mp3" preload="auto"></audio>
+    <audio id="draw-sound" src="sounds/draw.mp3" preload="auto"></audio>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
